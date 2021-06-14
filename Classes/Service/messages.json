@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "remetente": "Ismael",
+        "destinatario": "Weslley",
+        "assunto": "Teste: Assunto",
+        "corpo": "Teste: Corpo do texto",
+        "lida": null
+    },
+    {
+        "id": 1,
+        "remetente": "Weslley",
+        "destinatario": "Ismael",
+        "assunto": "Oi, ta dando certo?",
+        "corpo": "corpo do email",
+        "lida": null
+    },
+    {
+        "id": 2,
+        "remetente": "Weslley",
+        "destinatario": "Ismael",
+        "assunto": "Teste: Assunto",
+        "corpo": "Teste: Corpo do texto",
+        "lida": null
+    },
+    {
+        "id": 2,
+        "remetente": "Ismael",
+        "destinatario": "Weslley",
+        "assunto": "Oi, ta dando certo?",
+        "corpo": "corpo do email",
+        "lida": null
+    }
+]
