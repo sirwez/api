@@ -30,5 +30,21 @@
         "assunto": "Oi, ta dando certo?",
         "corpo": "corpo do email",
         "lida": null
+    },
+    {
+        "id": 2,
+        "remetente": "Ismael",
+        "destinatario": "Carol",
+        "assunto": "Oi, ta dando certo?",
+        "corpo": "corpo do email",
+        "lida": null
+    },
+    {
+        "id": 3,
+        "remetente": "Paulo",
+        "destinatario": "Weslley",
+        "assunto": "Oi, ta dando certo?",
+        "corpo": "corpo do email",
+        "lida": null
     }
 ]

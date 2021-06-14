@@ -84,15 +84,24 @@ class messagesService
 
     public function listarMessage($id)
     {
-        
         $UsuariosData = new usersService();
-        $idUs = $id;
-        if($UsuariosData->isExiste(1)){
+        $valid = false;
+        $json = file_get_contents(__DIR__ . '\users.json');
+        $data = json_decode($json);
+        
+        foreach ($data as $key => $value)
+        {
+            if (($id== $value->id))
+            {
+                $valid = true;
+            }
+        }
+        
+        if($valid){
             
         $allMessages[][] = []; //0 é enviadas, e 1 recebidas
         try
         {
-            // extrai a informação do ficheiro
             $string = file_get_contents(__DIR__ . '\messages.json');
             if (!$string)
             {
@@ -100,44 +109,42 @@ class messagesService
             }
             else
             {
-                // faz o decode o json para uma variavel php que fica em array
                 $json = json_decode($string);
                 $contEnv = 0;
                 $contRec = 0;
                 foreach ($json as $key => $value)
                 {
-                   if (1 == $value->id) {
+                   if ($id == $value->id) {
                     if ($UsuariosData->verificarUser($id) == $value->remetente)
                     {
-                        $allMessages[0][$contEnv]['remetente'] = $value->remetente;
-                        $allMessages[0][$contEnv]['destinatario'] = $value->destinatario;
-                        $allMessages[0][$contEnv]["assunto"] = $value->assunto;
-                        $allMessages[0][$contEnv]["corpo"] = $value->corpo;
+                        $allMessages['Enviadas'][$contEnv]['remetente'] = $value->remetente;
+                        $allMessages['Enviadas'][$contEnv]['destinatario'] = $value->destinatario;
+                        $allMessages['Enviadas'][$contEnv]["assunto"] = $value->assunto;
+                        $allMessages['Enviadas'][$contEnv]["corpo"] = $value->corpo;
 
                         $contEnv++;
                     }
                     if (!($UsuariosData->verificarUser($id) == $value->remetente))
                     {
-                        $allMessages[1][$contRec]['remetente'] = $value->remetente;
-                        $allMessages[1][$contRec]['destinatario'] = $value->destinatario;
-                        $allMessages[1][$contRec]["assunto"] = $value->assunto;
-                        $allMessages[1][$contRec]["corpo"] = $value->corpo;
+                        $allMessages['Recebidas'][$contRec]['remetente'] = $value->remetente;
+                        $allMessages['Recebidas'][$contRec]['destinatario'] = $value->destinatario;
+                        $allMessages['Recebidas'][$contRec]["assunto"] = $value->assunto;
+                        $allMessages['Recebidas'][$contRec]["corpo"] = $value->corpo;
 
                         $contRec++;
                     }
                    }
                 }
+                unset($allMessages[0]);
                 if (empty($allMessages))
                 {
                     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERR0_NENHUMA_MSG_ENCONTRADA);
                 }
                 else
                 {
-                    
                     return $allMessages;
                 }
-                // return $retorno;
-                
+               
             }
         }
         catch(Exception $e)

@@ -85,11 +85,7 @@ class usersService
                 $data = json_decode($json);
                 foreach ($data as $key => $value)
                 {
-                    if (($user === $value->nome))
-                    {
-                        $valid = true;
-                    }
-                    if (($user === $value->id))
+                    if (($user == $value->nome))
                     {
                         $valid = true;
                     }

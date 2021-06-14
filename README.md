@@ -32,7 +32,7 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 
 * /usuarios/login
 
-<!-- * /usuarios/listar/{id} -->
+* /usuarios/message/listar/{id}
 
 * **DELETE**
 

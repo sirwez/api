@@ -9,7 +9,7 @@ class UsuariosService
 {
 
     public const TABELA = 'usuarios';
-    public const RECURSOS_GET = ['login', 'messages'];
+    public const RECURSOS_GET = ['login', 'emails'];
     public const RECURSOS_DELETE = ['deletar'];
     public const RECURSOS_POST = ['cadastrar', ];
     public const RECURSOS_PUT = ['atualizar'];
@@ -87,7 +87,7 @@ class UsuariosService
                 ->UsuariosData
                 ->getUser($this->dados['id']) : $this->$recurso();
         }
-        elseif (in_array($recurso, self::RECURSOS_GET, true) && $recurso == 'messages')
+        elseif (in_array($recurso, self::RECURSOS_GET, true) && $recurso == 'emails')
         {
 
             $retorno = $this->dados['id'] > 0 ? $this
