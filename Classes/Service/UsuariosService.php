@@ -54,6 +54,7 @@ class UsuariosService
     }
     private function cadastrar()
     {
+        
         $login = [$this->dadosCorpoRequest['nome']];
         if ($login)
         {
@@ -147,11 +148,7 @@ class UsuariosService
     }
     private function deletar()
     {
-
-        return $this
-            ->UsuariosRepository
-            ->getMySQL()
-            ->delete(self::TABELA, $this->dados['id']);
+     return $this->messagesData->deleteMessage($this->dados['id']);
     }
 
     //put
