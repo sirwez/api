@@ -1,50 +1,68 @@
 [
     {
         "id": 1,
+        "uniqueID": 2,
         "remetente": "Ismael",
         "destinatario": "Weslley",
         "assunto": "Teste: Assunto",
         "corpo": "Teste: Corpo do texto",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     },
     {
         "id": 1,
+        "uniqueID": 3,
         "remetente": "Weslley",
         "destinatario": "Ismael",
         "assunto": "Oi, ta dando certo?",
         "corpo": "corpo do email",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     },
     {
         "id": 2,
+        "uniqueID": 4,
         "remetente": "Weslley",
         "destinatario": "Ismael",
         "assunto": "Teste: Assunto",
         "corpo": "Teste: Corpo do texto",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     },
     {
         "id": 2,
+        "uniqueID": 5,
         "remetente": "Ismael",
         "destinatario": "Weslley",
         "assunto": "Oi, ta dando certo?",
         "corpo": "corpo do email",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     },
     {
         "id": 2,
+        "uniqueID": 6,
         "remetente": "Ismael",
         "destinatario": "Carol",
         "assunto": "Oi, ta dando certo?",
         "corpo": "corpo do email",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     },
     {
         "id": 3,
+        "uniqueID": 7,
         "remetente": "Paulo",
         "destinatario": "Weslley",
         "assunto": "Oi, ta dando certo?",
         "corpo": "corpo do email",
-        "lida": null
+        "lida": false,
+        "resposta": false,
+        "encaminhada": false
     }
 ]

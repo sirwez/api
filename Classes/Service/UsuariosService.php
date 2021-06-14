@@ -11,7 +11,7 @@ class UsuariosService
     public const TABELA = 'usuarios';
     public const RECURSOS_GET = ['login', 'emails'];
     public const RECURSOS_DELETE = ['deletar'];
-    public const RECURSOS_POST = ['cadastrar', ];
+    public const RECURSOS_POST = ['cadastrar', 'emails'];
     public const RECURSOS_PUT = ['atualizar'];
 
     private array $dados;
@@ -37,6 +37,7 @@ class UsuariosService
     {
         $retorno = null;
         $recurso = $this->dados['recurso'];
+        
         if (in_array($recurso, self::RECURSOS_POST, true))
         {
             $retorno = $this->$recurso();

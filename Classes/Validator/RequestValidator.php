@@ -3,7 +3,7 @@
 namespace Validator;
 
 use InvalidArgumentException;
-use Repository\TokensAutorizadosRepository;
+
 use Service\UsuariosService;
 use Util\ConstantesGenericasUtil;
 use Util\JsonUtil;
@@ -12,7 +12,6 @@ class RequestValidator
 {
     private array $request;
     private array $dadosRequest;
-    private object $TokensAutorizadosRepository;
 
     const GET = 'GET';
     const DELETE = 'DELETE';
@@ -24,7 +23,6 @@ class RequestValidator
      */
     public function __construct($request = [])
     {
-        $this->TokensAutorizadosRepository = new TokensAutorizadosRepository();
         $this->request = $request;
     }
 
@@ -49,7 +47,6 @@ class RequestValidator
         if ($this->request['metodo'] !== self::GET && $this->request['metodo'] !== self::DELETE) {
             $this->dadosRequest = JsonUtil::tratarCorpoRequisicaoJson();
         }
-        $this->TokensAutorizadosRepository->validarToken(getallheaders()['Authorization']);
         $metodo = $this->request['metodo'];
         return $this->$metodo();
     }

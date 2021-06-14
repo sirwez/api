@@ -49,6 +49,23 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 
 * Não usado
 
+### Campos json
+## Users
+
+* id: "auto incremente"
+* nome: nome do usuário
+
+## Mensagem
+
+* id: identificação de quem está acessando a mensagem
+* uniqueID: indentificador da mensagem, cada mensagem, sejá resposta, encaminhamento, ou envios tem ids próprios.
+* remetente: quem envia
+* destinatario: quem recebe
+* assunto: assunto da mensagem
+* corpo: corpo da mensagem
+* lida: identificador para saber se mensagem foi aberta
+* resposta: identificador se a mensagem é uma resposta
+* encaminhada: identificador se a mensagem é encaminhada
 ### Autor
 
 **Weslley Aquinno**
