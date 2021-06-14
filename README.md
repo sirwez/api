@@ -49,13 +49,13 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 
 * Não usado
 
-### Campos json
-## Users
+## Campos json
+### Users
 
 * id: "auto incremente"
 * nome: nome do usuário
 
-## Mensagem
+### Mensagem
 
 * id: identificação de quem está acessando a mensagem
 * uniqueID: indentificador da mensagem, cada mensagem, sejá resposta, encaminhamento, ou envios tem ids próprios.
