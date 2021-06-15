@@ -14,9 +14,6 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 * Modelo REST
 * Orientação à Objetos(POO)
 * JSON
-* Autoloading de classes
-* Namespaces
-* PDO
 * Apache 2.4.46
 * Métodos GET, PUT, POST e DELETE
 
@@ -25,7 +22,6 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 * Windows 10
 * Wampserver64
 * Não testado em sistema Linux.
-* 
 ### Rotas
 
 # Post
@@ -36,10 +32,10 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 
 # GET
 
-- [ ]  Listar mensagens
+- [x]  Listar mensagens
 - Lista mensagens pelo ID de quem está logado, retorna um array associativo com dois campos: Enviados, e Recebidos
 - Rota: /usuarios/emails/
-- [ ]  Abrir mensagem
+- [x]  Abrir mensagem
 - Rota: /usuarios/emails/{id}
 
 # DELETE
@@ -70,8 +66,12 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 ## Campos json
 ### Users
 
-* id: "auto incremente"
+* id: "auto-incremente"
 * nome: nome do usuário
+
+### Temp
+
+* Armazena um ID para acessar os registros da api
 
 ### Mensagem
 
