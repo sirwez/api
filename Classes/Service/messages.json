@@ -1,17 +1,6 @@
 [
     {
         "id": 1,
-        "uniqueID": 1,
-        "remetente": "Corpo 1",
-        "destinatario": "Corpo 1",
-        "assunto": "Corpo 1",
-        "corpo": "Corpo 1",
-        "lida": false,
-        "resposta": false,
-        "encaminhada": false
-    },
-    {
-        "id": 1,
         "uniqueID": 2,
         "remetente": "Corpo 2",
         "destinatario": "Corpo 2",

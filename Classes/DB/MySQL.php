@@ -32,30 +32,6 @@ class MySQL
             throw new PDOException($exception->getMessage());
         }
     }
-
-    /**
-     * @param $tabela
-     * @param $id
-     * @return string
-     */
-    public function delete($tabela, $id)
-    {
-        $consultaDelete = 'DELETE FROM ' . $tabela . ' WHERE id = :id';
-        if ($tabela && $id) {
-            $this->db->beginTransaction();
-            $stmt = $this->db->prepare($consultaDelete);
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            if ($stmt->rowCount() > 0) {
-                $this->db->commit();
-                return ConstantesGenericasUtil::MSG_DELETADO_SUCESSO;
-            }
-            $this->db->rollBack();
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_SEM_RETORNO);
-        }
-        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-    }
-
     /**
      * @param $tabela
      * @return array

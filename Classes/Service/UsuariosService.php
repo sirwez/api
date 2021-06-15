@@ -95,6 +95,8 @@ class UsuariosService
             $retorno = $this->dados['id'] > 0 ? $this
                 ->messagesData
                 ->listarMessage($this->dados['id']) : $this->$recurso();
+
+                // $retorno = $this->dados['id'] > 0 ? $this->getOneByKey() : $this->$recurso();
         }
         else
         {
@@ -113,13 +115,20 @@ class UsuariosService
     //         ->getMySQL()
     //         ->getOneByKey(self::TABELA, $this->dados['id']);
     // }
-    // private function listar()
-    // {
-    //     return $this
-    //         ->UsuariosRepository
-    //         ->getMySQL()
-    //         ->getAll(self::TABELA);
-    // }
+    private function emails()
+    {
+        return $this
+            ->UsuariosRepository
+            ->getMySQL()
+            ->getAll(self::TABELA);
+    }
+    private function getMessage()
+    {
+        return $this
+            ->UsuariosRepository
+            ->getMySQL()
+            ->getAll(self::TABELA);
+    }
     //deletes
     public function validarDelete()
     {
@@ -147,7 +156,7 @@ class UsuariosService
         return $retorno;
     }
     private function deletar()
-    {
+    {  
      return $this->messagesData->deleteMessage($this->dados['id']);
     }
 

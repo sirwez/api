@@ -387,11 +387,11 @@ class messagesService
                 }
                 if ($isDeleted)
                 {
-                    return true;
+                    return ConstantesGenericasUtil::MSG_DELETADO_SUCESSO;
                 }
                 else
                 {
-                    return false;
+                    return ConstantesGenericasUtil::MSG_ERRO_GENERICO;
                 }
 
             }
