@@ -1,11 +1,11 @@
 [
     {
-        "id": 1,
+        "id": 2,
         "uniqueID": 1,
         "remetente": "Weslley",
         "destinatario": "Ismael",
-        "assunto": "Corpo 2",
-        "corpo": "Corpo 2",
+        "assunto": "Primeira mensagem",
+        "corpo": "Oi, povo",
         "lida": true,
         "resposta": false,
         "encaminhada": false
@@ -15,19 +15,8 @@
         "uniqueID": 2,
         "remetente": "Ismael",
         "destinatario": "Weslley",
-        "assunto": "Corpo 3",
-        "corpo": "Corpo 3",
-        "lida": true,
-        "resposta": false,
-        "encaminhada": false
-    },
-    {
-        "id": 2,
-        "uniqueID": 3,
-        "remetente": "Corpo 3",
-        "destinatario": "Corpo 2",
-        "assunto": "Corpo 4",
-        "corpo": "Corpo 4",
+        "assunto": "Segunda Mensagem",
+        "corpo": "baaaa",
         "lida": true,
         "resposta": false,
         "encaminhada": false

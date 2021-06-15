@@ -109,6 +109,7 @@ class usersService
 
     public function cadastrarUser($user)
     {
+        
         try
         {
             $string = file_get_contents(__DIR__ . '\users.json');
@@ -118,6 +119,7 @@ class usersService
             }
             else
             {
+                $valid = false;
                 $json = json_decode($string, true);
                 $tamArray = count($json);
                 $json[$tamArray]["id"] = $tamArray+1;
@@ -126,23 +128,23 @@ class usersService
                 $fp = fopen(__DIR__ . '\users.json', 'w');
                 fwrite($fp, json_encode($json, JSON_PRETTY_PRINT));
                 fclose($fp);
-                $json2 = json_decode($string, true);
 
-                foreach ($json2 as $key => $value)
+                // $string2 = file_get_contents(__DIR__ . '\users.json');
+                // $json2 = json_decode($string2, true);
+
+                if ($this->isExiste($userValid))
                 {
-                    if (in_array($user, $value))
-                    {
-                        $valid = true;
-
-                    }
+                    $valid = true;
+                } else{
+                    var_dump("não");
                 }
                 if ($valid)
                 {
-                    return false;
+                    return true;
                 }
                 else
                 {
-                    return true;
+                    return false;
                 }
 
             }
@@ -153,7 +155,6 @@ class usersService
         }
 
     }
-
     private function unprocessableEntityResponse()
     {
         $response['status_code_header'] = 'HTTP/1.1 422 Unprocessable Entity';

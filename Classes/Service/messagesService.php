@@ -33,24 +33,43 @@ class messagesService
         }
     }
 
-    public static function send_Message($id, $remetente, $destinatario, $assunto, $corpo)
+    public static function send_Message($id, $arrayMessage)
     {
         //Vou usar essas coisas na principal
         // $user = new PersonController();
         try
         {
             //$user->isExiste($destinatario) && $user->isExiste($remetente)
+            $remetente = $arrayMessage[1][0];
+            $destinatario = $arrayMessage[2][0];
+            $assunto = $arrayMessage[3][0];
+            $corpo = $arrayMessage[4][0];
             if (true)
             {
+                // "id": 2,
+                // "uniqueID": 3,
+                // "remetente": "Corpo 3",
+                // "destinatario": "Corpo 2",
+                // "assunto": "Corpo 4",
+                // "corpo": "Corpo 4",
+                // "lida": true,
+                // "resposta": false,
+                // "encaminhada": false
                 $responde = self::verificaMessage();
+                $string = file_get_contents(__DIR__ . '\messages.json');
+                $json = json_decode($string, true);
+                $tamArray = count($json);
+
                 $responde[0][$responde[1]]["id"] = $id;
-                $responde[0][$responde[1]]["remetente"] = $remetente;
+                $responde[0][$responde[1]]["uniqueID"] = $tamArray+1;
+                $responde[0][$responde[1]]["remetente"] =$remetente;
                 $responde[0][$responde[1]]["destinatario"] = $destinatario;
                 $responde[0][$responde[1]]["assunto"] = $assunto;
                 $responde[0][$responde[1]]["corpo"] = $corpo;
-                // $responde[0][$responde[1]]["resposta"] = false;
-                // $responde[0][$responde[1]]["encaminhar"] = false;
                 $responde[0][$responde[1]]["lida"] = false;
+                $responde[0][$responde[1]]["resposta"] = false;
+                $responde[0][$responde[1]]["encaminhar"] = false;
+                
                 // abre o ficheiro em modo de escrita
                 $fp = fopen(__DIR__ . '\messages.json', 'w');
                 // escreve no ficheiro em json
@@ -406,10 +425,90 @@ class messagesService
         }
     }
 
-    public function responderMessage($id, $remetente, $destinatario, $assunto, $corpo)
+    public function responderMessage($id, $arrayMessage)
     {
-        $msgResp = self::send_Message($id, $destinatario, $remetente, $assunto, $corpo);
-        return $msgResp;
+         //uniqueID -> remetente , e o assunto
+        // id -> quem vai responder, uniqueIDnew-> novo, remetente -> quem vai responder, 
+        //destinatario -> antigo que enviou, assunto -> assunto anterior, -> receber do input
+        //Vou usar essas coisas na principal
+        // $user = new PersonController();
+
+        // $string = file_get_contents(__DIR__ . '\tempUser.json');
+        // $json = json_decode($string, true);
+        // $resp[1] =[$this->dadosCorpoRequest['uniqueID']];
+        // $resp[2] = [$this->dadosCorpoRequest['assunto']];
+        $IdUnic = $arrayMessage[1][0];
+        $corpo = $arrayMessage[2][0];
+        try
+        {
+            //$user->isExiste($destinatario) && $user->isExiste($remetente)
+
+            if (true)
+            {
+                // "id": 2,
+                // "uniqueID": 3,
+                // "remetente": "Corpo 3",
+                // "destinatario": "Corpo 2",
+                // "assunto": "Corpo 4",
+                // "corpo": "Corpo 4",
+                // "lida": true,
+                // "resposta": false,
+                // "encaminhada": false
+                $responde = self::verificaMessage();
+                $string = file_get_contents(__DIR__ . '\messages.json');
+                $json2 = json_decode($string, true);
+                $tamArray = count($json2);
+                // $responde = self::verificaMessage();
+                // $string = file_get_contents(__DIR__ . '\messages.json');
+                // $json = json_decode($string, true);
+                // $tamArray = count($json);
+                $userSearch = new usersService();
+                $newRemetente = $userSearch->verificarUser($id);
+                foreach ($json2 as $key => $value) {
+
+                    if($IdUnic==$value['uniqueID']){
+                        $responde[0][$responde[1]]["id"] = $id;
+                        $responde[0][$responde[1]]["uniqueID"] = $tamArray+1;
+                        $responde[0][$responde[1]]["remetente"] = $newRemetente;
+                        $responde[0][$responde[1]]["destinatario"] = $value['remetente'];
+                        $responde[0][$responde[1]]["assunto"] = $value['assunto'];
+                        $responde[0][$responde[1]]["corpo"] = $corpo;
+                        $responde[0][$responde[1]]["lida"] = false;
+                        $responde[0][$responde[1]]["resposta"] = true;
+                        $responde[0][$responde[1]]["encaminhar"] = false;
+                    }
+                }
+
+                
+                // abre o ficheiro em modo de escrita
+                $fp = fopen(__DIR__ . '\messages.json', 'w');
+                // escreve no ficheiro em json
+                fwrite($fp, json_encode($responde[0], JSON_PRETTY_PRINT));
+                // fecha o ficheiro
+                fclose($fp);
+
+                $tam = self::verificaMessage();
+                if ($tam[1] > $responde[1])
+                {
+                    return ConstantesGenericasUtil::TIPO_SUCESSO;
+                }
+                else
+                {
+                    return ConstantesGenericasUtil::TIPO_ERRO;
+                }
+
+            }
+            else
+            {
+                $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
+                $response['body'] = 'Destinatário ou Remetente não existem';
+                return $response;
+            }
+        }
+        catch(Exception $e)
+        {
+            $e->getMessage();
+        }
     }
 
 }

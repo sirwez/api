@@ -10,7 +10,7 @@ class UsuariosService
     public const TABELA = 'usuarios';
     public const RECURSOS_GET = ['login', 'emails'];
     public const RECURSOS_DELETE = ['deletar'];
-    public const RECURSOS_POST = ['cadastrar', 'emails'];
+    public const RECURSOS_POST = ['cadastrar', 'enviar', 'encaminhar', 'responder'];
     public const RECURSOS_PUT = ['atualizar'];
     
 
@@ -52,6 +52,55 @@ class UsuariosService
             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
         }
         return $retorno;
+    }
+    //$id, $remetente, $destinatario, $assunto, $corpo
+    // "remetente": "Ismael",
+    // "destinatario": "Weslley",
+    // "assunto": "Corpo 3",
+    // "corpo": "Corpo 3",
+
+
+    private function responder(){
+
+        $string = file_get_contents(__DIR__ . '\tempUser.json');
+        $json = json_decode($string, true);
+        $resp[1] =[$this->dadosCorpoRequest['uniqueID']];
+        $resp[2] = [$this->dadosCorpoRequest['corpo']];
+        
+        //uniqueID -> remetente , e o assunto
+        // id -> quem vai responder, uniqueIDnew-> novo, remetente -> quem vai responder, 
+        //destinatario -> antigo que enviou, assunto -> assunto anterior, -> receber do input
+        $messageRespondida = $this->messagesData->responderMessage( $json['tempID'],$resp);
+        if($messageRespondida){
+            $response['mensagemRespondida'] = $messageRespondida;
+            return $response;
+        }
+        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
+
+        
+        var_dump("responder");exit;
+    }
+
+    private function encaminhar(){
+        var_dump("encaminhar");exit;
+    }
+    private function enviar(){
+        
+
+        $string = file_get_contents(__DIR__ . '\tempUser.json');
+        $json = json_decode($string, true);
+        $msg[1] = [$this->dadosCorpoRequest['remetente']];
+        $msg[2] = [$this->dadosCorpoRequest['destinatario']];
+        $msg[3] = [$this->dadosCorpoRequest['assunto']];
+        $msg[4] = [$this->dadosCorpoRequest['corpo']];
+        
+        $messageEnviado = $this->messagesData->send_Message( $json['tempID'],$msg);
+        if($messageEnviado){
+            $response['mensagemEnviada'] = $messageEnviado;
+            return $response;
+        }
+        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
+
     }
     private function cadastrar()
     {
@@ -166,60 +215,60 @@ class UsuariosService
      return $this->messagesData->deleteMessage($this->dados['id']);
     }
 
-    //put
-    public function validarPut()
-    {
-        $retorno = null;
-        $recurso = $this->dados['recurso'];
-        if (in_array($recurso, self::RECURSOS_PUT, true))
-        {
-            if ($this->dados['id'] > 0)
-            {
-                $retorno = $this->$recurso();
-            }
-            else
-            {
-                throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
-            }
-        }
-        else
-        {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
-        }
-        if ($retorno == null)
-        {
-            throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
-        }
-        return $retorno;
-    }
+    // //put
+    // public function validarPut()
+    // {
+    //     $retorno = null;
+    //     $recurso = $this->dados['recurso'];
+    //     if (in_array($recurso, self::RECURSOS_PUT, true))
+    //     {
+    //         if ($this->dados['id'] > 0)
+    //         {
+    //             $retorno = $this->$recurso();
+    //         }
+    //         else
+    //         {
+    //             throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_ID_OBRIGATORIO);
+    //         }
+    //     }
+    //     else
+    //     {
+    //         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
+    //     }
+    //     if ($retorno == null)
+    //     {
+    //         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_GENERICO);
+    //     }
+    //     return $retorno;
+    // }
 
-    private function atualizar()
-    {
-        if ($this
-            ->UsuariosRepository
-            ->updateUser($this->dados['id'], $this->dadosCorpoRequest) > 0)
-        {
-            $this
-                ->UsuariosRepository
-                ->getMySQL()
-                ->getDb()
-                ->commit();
-            return ConstantesGenericasUtil::MSG_ATUALIZADO_SUCESSO;
-        }
+    // private function atualizar()
+    // {
+    //     if ($this
+    //         ->UsuariosRepository
+    //         ->updateUser($this->dados['id'], $this->dadosCorpoRequest) > 0)
+    //     {
+    //         $this
+    //             ->UsuariosRepository
+    //             ->getMySQL()
+    //             ->getDb()
+    //             ->commit();
+    //         return ConstantesGenericasUtil::MSG_ATUALIZADO_SUCESSO;
+    //     }
 
-        $this
-            ->UsuariosRepository
-            ->getMySQL()
-            ->getDb()
-            ->rollback();
-        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_NAO_AFETADO);
-    }
+    //     $this
+    //         ->UsuariosRepository
+    //         ->getMySQL()
+    //         ->getDb()
+    //         ->rollback();
+    //     throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_NAO_AFETADO);
+    // }
 
     private function tempID($id){
 
         $string = file_get_contents(__DIR__ . '\tempUser.json');
         $json = json_decode($string, true);
-        $json["tempID"] = $id;
+        $json["tempID"] = intval($id);
         $fp = fopen(__DIR__ . '\tempUser.json', 'w');
         fwrite($fp, json_encode($json, JSON_PRETTY_PRINT));
         fclose($fp);
