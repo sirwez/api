@@ -28,26 +28,44 @@ Não segue nenhum modelo arquitetural de software, como MVC por exemplo.
 * 
 ### Rotas
 
-* **GET**
+# Post
 
-* /usuarios/login
+- [ ]  Enviar mensagem
+- [ ]  Responder Mensagem
+- [ ]  Encaminhar mensagem
 
-* /usuarios/message/listar/{id}
+# GET
 
-* **DELETE**
+- [ ]  Listar mensagens
+- Lista mensagens pelo ID de quem está logado, retorna um array associativo com dois campos: Enviados, e Recebidos
+- Rota: /usuarios/emails/
+- [ ]  Abrir mensagem
+- Rota: /usuarios/emails/{id}
 
-* /usuarios/mensagens/deletar/{id}
+# DELETE
 
-* **POST**
+- [x]  Apagar mensagens //funcionando
+- Recebe o ID Único da mensagem.
+- Rota: /usuarios/deletar/{id}
 
-* /usuarios/cadastrar
-* /usuarios/mensagens/enviar
-<!-- * /usuarios/mensagens/encaminhar
-* /usuarios/mensagens/responder -->
+# GET
 
-* **PUT**
+- [x]  Logar  //funcionando
+- recebe o ID do usuário e verifica se existe ou não (ID obrigatoriamente numérico)
+- Rota: /usuarios/login/{id}
 
-* Não usado
+# POST
+
+- [x]  Cadastrar  //funcionando
+- Usuário cadastra seu nome e recebe um ID único gerado pelo sistema.
+- Sistema de senhas não implementado
+- Rota: /usuarios/cadastrar
+
+# Outros
+
+- [ ]  rotas
+- [ ]  interface
+- Observações:
 
 ## Campos json
 ### Users
