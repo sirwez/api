@@ -1,12 +1,23 @@
 [
     {
         "id": 1,
-        "uniqueID": 2,
-        "remetente": "Corpo 2",
-        "destinatario": "Corpo 2",
+        "uniqueID": 1,
+        "remetente": "Weslley",
+        "destinatario": "Ismael",
         "assunto": "Corpo 2",
         "corpo": "Corpo 2",
-        "lida": false,
+        "lida": true,
+        "resposta": false,
+        "encaminhada": false
+    },
+    {
+        "id": 1,
+        "uniqueID": 2,
+        "remetente": "Ismael",
+        "destinatario": "Weslley",
+        "assunto": "Corpo 3",
+        "corpo": "Corpo 3",
+        "lida": true,
         "resposta": false,
         "encaminhada": false
     },
@@ -14,21 +25,10 @@
         "id": 2,
         "uniqueID": 3,
         "remetente": "Corpo 3",
-        "destinatario": "Corpo 3",
-        "assunto": "Corpo 3",
-        "corpo": "Corpo 3",
-        "lida": false,
-        "resposta": false,
-        "encaminhada": false
-    },
-    {
-        "id": 3,
-        "uniqueID": 4,
-        "remetente": "Corpo 4",
-        "destinatario": "Corpo 4",
+        "destinatario": "Corpo 2",
         "assunto": "Corpo 4",
         "corpo": "Corpo 4",
-        "lida": false,
+        "lida": true,
         "resposta": false,
         "encaminhada": false
     }

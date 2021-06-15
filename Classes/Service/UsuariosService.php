@@ -4,7 +4,6 @@ namespace Service;
 use InvalidArgumentException;
 use Repository\UsuariosRepository;
 use Util\ConstantesGenericasUtil;
-
 class UsuariosService
 {
 
@@ -13,7 +12,9 @@ class UsuariosService
     public const RECURSOS_DELETE = ['deletar'];
     public const RECURSOS_POST = ['cadastrar', 'emails'];
     public const RECURSOS_PUT = ['atualizar'];
+    
 
+    private array $userIDSecret = []; // dois campos, 0 = id, 1 = true/false se o email existe ou não.
     private array $dados;
     private array $dadosCorpoRequest = [];
 
@@ -85,18 +86,21 @@ class UsuariosService
         $recurso = $this->dados['recurso'];
         if (in_array($recurso, self::RECURSOS_GET, true) && $recurso == 'login')
         {
+            // $this->userIDSecret['id'] = $this->dados['id'];
             $retorno = $this->dados['id'] > 0 ? $this
                 ->UsuariosData
                 ->getUser($this->dados['id']) : $this->$recurso();
+                if (array_key_exists('User', $retorno)) {
+                    $this->tempID($this->dados['id']);
+                }
         }
         elseif (in_array($recurso, self::RECURSOS_GET, true) && $recurso == 'emails')
         {
+            // $retorno = $this->dados['id'] > 0 ? $this
+            //     ->messagesData
+            //     ->listarMessage($this->dados['id']) : $this->$recurso();
 
-            $retorno = $this->dados['id'] > 0 ? $this
-                ->messagesData
-                ->listarMessage($this->dados['id']) : $this->$recurso();
-
-                // $retorno = $this->dados['id'] > 0 ? $this->getOneByKey() : $this->$recurso();
+                $retorno = $this->dados['id'] > 0 ? $this->getOneMessageBykey($this->dados['id']) : $this->$recurso();
         }
         else
         {
@@ -108,26 +112,28 @@ class UsuariosService
         }
         return $retorno;
     }
-    // private function getOneBykey()
-    // {
-    //     return $this
-    //         ->UsuariosRepository
-    //         ->getMySQL()
-    //         ->getOneByKey(self::TABELA, $this->dados['id']);
-    // }
+    private function getOneMessageBykey($idUnique)
+    {
+
+        return $this
+        ->messagesData
+        ->getMessage($idUnique);
+    }
+    //Ao clicar em login seta o id do user, não recebe diretamente do usuário.
     private function emails()
     {
-        return $this
-            ->UsuariosRepository
-            ->getMySQL()
-            ->getAll(self::TABELA);
+        $string = file_get_contents(__DIR__ . '\tempUser.json');
+        $json = json_decode($string, true); 
+       return $this
+                ->messagesData
+                ->listarMessage($json["tempID"]);
     }
     private function getMessage()
     {
-        return $this
-            ->UsuariosRepository
-            ->getMySQL()
-            ->getAll(self::TABELA);
+
+    }
+    private function login(){
+        throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_RECURSO_INEXISTENTE);
     }
     //deletes
     public function validarDelete()
@@ -207,5 +213,16 @@ class UsuariosService
             ->getDb()
             ->rollback();
         throw new InvalidArgumentException(ConstantesGenericasUtil::MSG_ERRO_NAO_AFETADO);
+    }
+
+    private function tempID($id){
+
+        $string = file_get_contents(__DIR__ . '\tempUser.json');
+        $json = json_decode($string, true);
+        $json["tempID"] = $id;
+        $fp = fopen(__DIR__ . '\tempUser.json', 'w');
+        fwrite($fp, json_encode($json, JSON_PRETTY_PRINT));
+        fclose($fp);
+
     }
 }

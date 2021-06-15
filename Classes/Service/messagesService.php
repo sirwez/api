@@ -29,7 +29,7 @@ class messagesService
         }
         catch(Exception $e)
         {
-            echo "Exceção capturada: " . $e->getMessage();
+            $e->getMessage();
         }
     }
 
@@ -152,7 +152,7 @@ class messagesService
             }
             catch(Exception $e)
             {
-                echo "Exceção capturada: " . $e->getMessage();
+                $e->getMessage();
             }
 
         }
@@ -164,7 +164,7 @@ class messagesService
         }
     }
 
-    public function getMessage($id, $remetente, $destinatario, $assunto, $corpo)
+    public function getMessage($idUnique)
     {
         $oneMessages = []; //retorna uma
         $allMessages = []; //seta true para lido no .json
@@ -172,6 +172,7 @@ class messagesService
         {
             // extrai a informação do ficheiro
             $string = file_get_contents(__DIR__ . '\messages.json');
+            
             if (!$string)
             {
                 throw new Exception(ConstantesGenericasUtil::MSG_ERRO_AO_ABRIR_ARQUIVO);
@@ -181,11 +182,12 @@ class messagesService
                 // faz o decode o json para uma variavel php que fica em array
                 $json = json_decode($string);
                 $cont = 0;
+                $string2 = file_get_contents(__DIR__ . '\tempUser.json');
+                $json2 = json_decode($string2, true);
                 foreach ($json as $key => $value)
                 {
-                    if (($id == $value->id) && ($remetente == $value->remetente) && ($destinatario == $value->destinatario) && ($assunto == $value->assunto) && ($corpo == $value->corpo))
+                    if (($idUnique == $value->uniqueID) && $json2['tempID'] == $value->id)
                     {
-                        $oneMessages[$cont]['id'] = $value->id;
                         $oneMessages[$cont]['remetente'] = $value->remetente;
                         $oneMessages[$cont]['destinatario'] = $value->destinatario;
                         $oneMessages[$cont]["assunto"] = $value->assunto;
@@ -205,28 +207,30 @@ class messagesService
                     $cont = 0;
                     foreach ($json as $key => $value)
                     {
-                        if (($id == $value->id) && $destinatario == $value->destinatario && $assunto == $value->assunto && $corpo == $value->corpo)
+                        if (($idUnique  == $value->uniqueID))
                         {
                             $allMessages[$cont]['id'] = $value->id;
+                            $allMessages[$cont]['uniqueID'] = $value->uniqueID;
                             $allMessages[$cont]['remetente'] = $value->remetente;
                             $allMessages[$cont]['destinatario'] = $value->destinatario;
-                            $allMessages[$cont]["assunto"] = $value->assunto;
-                            $allMessages[$cont]["corpo"] = $value->corpo;
-                            // $allMessages[$cont]["resposta"] = $value->resposta;
-                            // $allMessages[$cont]["encaminhar"] = $value->encaminhar;
-                            $allMessages[$cont]["lida"] = true;
+                            $allMessages[$cont]['assunto'] = $value->assunto;
+                            $allMessages[$cont]['corpo'] = $value->corpo;
+                            $allMessages[$cont]['lida'] = true;
+                            $allMessages[$cont]['resposta'] = $value->resposta;
+                            $allMessages[$cont]['encaminhada'] = $value->encaminhada;
 
                         }
                         else
                         {
                             $allMessages[$cont]['id'] = $value->id;
+                            $allMessages[$cont]['uniqueID'] = $value->uniqueID;
                             $allMessages[$cont]['remetente'] = $value->remetente;
                             $allMessages[$cont]['destinatario'] = $value->destinatario;
-                            $allMessages[$cont]["assunto"] = $value->assunto;
-                            $allMessages[$cont]["corpo"] = $value->corpo;
-                            // $allMessages[$cont]["resposta"] = $value->resposta;
-                            // $allMessages[$cont]["encaminhar"] = $value->encaminhar;
-                            $allMessages[$cont]["lida"] = $value->lido;
+                            $allMessages[$cont]['assunto'] = $value->assunto;
+                            $allMessages[$cont]['corpo'] = $value->corpo;
+                            $allMessages[$cont]['lida'] = $value->lida;
+                            $allMessages[$cont]['resposta'] = $value->resposta;
+                            $allMessages[$cont]['encaminhada'] = $value->encaminhada;
 
                         }
                         $cont++;
@@ -245,7 +249,7 @@ class messagesService
         }
         catch(Exception $e)
         {
-            echo "Exceção capturada: " . $e->getMessage();
+            $e->getMessage();
         }
 
     }
@@ -318,7 +322,7 @@ class messagesService
                         );
                     }
 
-                    return $encaminhadaMessages;
+                    return $encaminhadaMessages; //$response
                 }
                 // return $retorno;
                 
@@ -326,7 +330,7 @@ class messagesService
         }
         catch(Exception $e)
         {
-            echo "Exceção capturada: " . $e->getMessage();
+            $e->getMessage();
         }
 
     }
@@ -398,7 +402,7 @@ class messagesService
         }
         catch(Exception $e)
         {
-            echo "Exceção capturada: " . $e->getMessage();
+            $e->getMessage();
         }
     }
 
